@@ -16,3 +16,5 @@ def get_html_text(url, timeout=3, times=5):
             return text
         except requests.exceptions.RequestException:
             i += 1
+
+    return None

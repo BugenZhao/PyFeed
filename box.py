@@ -20,6 +20,7 @@ class Box:
         self.fg.language('zh-CN')
 
         self.dict = {}
+        self.version = 'v0.2'
 
     def add_article(self, article: Article):
         fe = self.fg.add_entry()
@@ -44,15 +45,15 @@ class Box:
 
     def article(self, article: Article):
         if article.link not in self.dict:
-            print('New article:', article.title)
+            logging.info('New article: ' + article.title)
             self.add_article(article)
             self.dict[article.link] = article
         elif article != self.dict[article.link]:
-            print('Update article:', article.title)
+            logging.info('Update article: ' + article.title)
             self.update_article(article)
             self.dict[article.link] = article
         else:
-            print('Article already existed:', article.title)
+            logging.info('Article already existed: ' + article.title)
 
     def rss_file(self, filename):
         self.fg.rss_file(filename, pretty=True)

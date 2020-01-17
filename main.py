@@ -1,3 +1,5 @@
+import json
+import logging
 import pickle
 import signal
 import spider
@@ -5,25 +7,34 @@ from threading import Timer
 
 from box import Box
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 box: Box = Box()
+config: dict = {}
 
 
 def init():
+    global config
+    with open('config.json', 'r') as c:
+        config = json.load(c)
+
     global box
     try:
-        with open('box.p', 'rb') as f:
+        with open(config['box_path'], 'rb') as f:
             box = pickle.load(f)
-        print('Loaded {} articles from file.'.format(box.size()))
+        logging.info('Loaded {} articles from file.'.format(box.size()))
+        if box.version != config['version']:
+            logging.warning('Box version is {} while feed version is {}'.format(box.version, config['version']))
     except:
         box = Box()
-        print('New box built.')
+        logging.info('New box built.')
 
 
 def save():
-    print('Saving...')
-    with open('box.p', 'wb') as f:
+    logging.info('Saving...')
+    with open(config['box_path'], 'wb') as f:
         pickle.dump(box, f)
-    print('Saved.')
+    logging.info('Saved.')
 
 
 def my_exit(signum, frame):
@@ -34,7 +45,7 @@ def my_exit(signum, frame):
 def worker():
     for article in spider.get_articles():
         box.article(article)
-    box.rss_file('rss.xml')
+    box.rss_file(config['rss_path'])
 
 
 if __name__ == '__main__':
@@ -45,8 +56,8 @@ if __name__ == '__main__':
 
     i = 0
     while True:
-        print(i)
         i += 1
-        timer = Timer(3.0, worker)
+        logging.info('[ {} ]'.format(i))
+        timer = Timer(float(config['time_interval']), worker)
         timer.start()
         timer.join()

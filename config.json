@@ -1,0 +1,6 @@
+{
+  "version": "v0.2",
+  "time_interval": 3,
+  "box_path": "./box.p",
+  "rss_path": "./rss.xml"
+}

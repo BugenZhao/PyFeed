@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import List
 
@@ -16,7 +17,7 @@ def get_date(a) -> str:
                   .xpath('//*[@id="layout11"]/div/div[1]/div[2]/text()')[0])
         ret = re.search(r'\d{4}-\d{2}-\d{2}', raw)[0]
     except:
-        print("Error getting date of", a.xpath('@href')[0])
+        logging.error("Error getting date of", a.xpath('@href')[0])
     finally:
         return ret
 
@@ -38,6 +39,6 @@ def get_articles() -> List[Article]:
                                                get_date(a)),
                              others))
     except:
-        print('Failed to get articles')
+        logging.error('Failed to get articles')
 
     return articles
