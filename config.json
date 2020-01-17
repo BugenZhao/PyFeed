@@ -1,6 +1,6 @@
 {
   "version": "v0.2",
-  "time_interval": 3,
+  "time_interval": 900,
   "box_path": "./box.p",
   "rss_path": "/root/homepage/public/rss.xml"
 }
