@@ -29,6 +29,8 @@ def init():
         box = Box()
         logging.info('New box built.')
 
+    box.rss_file(config['rss_path'])
+
 
 def save():
     logging.info('Saving...')
