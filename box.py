@@ -20,7 +20,7 @@ class Box:
         self.fg.language('zh-CN')
 
         self.dict = {}
-        self.version = 'v0.2'
+        self.version = 'v0.2.1'
 
     def add_article(self, article: Article):
         fe = self.fg.add_entry()

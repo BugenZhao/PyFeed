@@ -60,7 +60,8 @@ if __name__ == '__main__':
     while True:
         i += 1
         logging.info('[ {} ] will start in {} seconds'.format(i, config['time_interval']))
-        timer = Timer(float(config['time_interval']), worker)
+        time_interval = float(config['time_interval']) if i != 1 else 0.0
+        timer = Timer(time_interval, worker)
         timer.start()
         timer.join()
         logging.info('[ {} ] Done.'.format(i))
