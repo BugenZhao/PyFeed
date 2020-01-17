@@ -28,7 +28,7 @@ class Box:
         fe.link(href=article.link)
         fe.title(article.title)
         fe.description(article.description)
-        fe.pubDate(datetime.fromisoformat(article.date).replace(tzinfo=gettz("Asia/Shanghai")))
+        fe.pubDate(datetime.strptime(article.date, "%Y-%m-%d").replace(tzinfo=gettz("Asia/Shanghai")))
 
         self.fg.updated()
 
@@ -38,7 +38,7 @@ class Box:
         fe.link(href=article.link)
         fe.title(article.title)
         fe.description(article.description)
-        fe.pubDate(datetime.fromisoformat(article.date).replace(tzinfo=gettz("Asia/Shanghai")))
+        fe.pubDate(datetime.strptime(article.date, "%Y-%m-%d").replace(tzinfo=gettz("Asia/Shanghai")))
         self.fg.entry(fe, replace=True)
 
         self.fg.updated()
