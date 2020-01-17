@@ -29,13 +29,20 @@ If you want to host your own feed, follow the instructions below:
    ```json
    {
      "version": "v0.2",
-     "time_interval": 900,  // Time interval for update
+     "time_interval": 900,  
      "box_path": "./box.p",
-     "rss_path": "/root/homepage/public/rss.xml" // Path of the feed to generate
+     "rss_path": "/root/homepage/public/rss.xml"
    }
    ```
 
+   | Key           | Description                                 |
+   | ------------- | ------------------------------------------- |
+   | time_interval | Time interval for update                    |
+   | box_path      | Path for app to save and load current state |
+   | rss_path      | Path of the feed to generate                |
+
 3. Go for it.
+
    ```bash
    python3 ./main.py
    ```
