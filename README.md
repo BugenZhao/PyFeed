@@ -1,9 +1,9 @@
 # PyFeed
-A simple RSS feed implemented in Python, for Office of undergraduate affairs, SEIEE, SJTU.
+A simple RSS feed implemented in Python, for Office of Undergraduate Affairs, SEIEE, SJTU.
 
 ## Feed on bugenzhao.com
 
-You can get a existing feed for **Office of undergraduate affairs, SEIEE, SJTU** at:
+You can get a existing feed for **Office of Undergraduate Affairs, SEIEE, SJTU** at:
 
 > https://bugenzhao.com/rss.xml
 
