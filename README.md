@@ -1,16 +1,15 @@
 # PyFeed
 A simple RSS feed implemented in Python, for Office of undergraduate affairs, SEIEE, SJTU.
 
-##Feed on bugenzhao.com
+## Feed on bugenzhao.com
 
 You can get a existing feed for **Office of undergraduate affairs, SEIEE, SJTU** at:
 
 > https://bugenzhao.com/rss.xml
->
 
 Subscribe it with [NetNewsWire](https://ranchero.com/netnewswire/), a fully free RSS reader for macOS and iOS.
 
-![截屏2020-01-17下午6.28.23](img/screenshot.png)
+![Screenshot](img/screenshot.png)
 
 ## Self Hosting
 
@@ -41,7 +40,7 @@ If you want to host your own feed, follow the instructions below:
    | box_path      | Path for app to save and load current state |
    | rss_path      | Path of the feed to generate                |
 
-3. Go for it.
+3. Go for it!
 
    ```bash
    python3 ./main.py
