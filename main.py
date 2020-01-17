@@ -2,9 +2,9 @@ import json
 import logging
 import pickle
 import signal
-import spider
 from threading import Timer
 
+import spider
 from box import Box
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -57,7 +57,8 @@ if __name__ == '__main__':
     i = 0
     while True:
         i += 1
-        logging.info('[ {} ]'.format(i))
+        logging.info('[ {} ] will start in {} seconds'.format(i, config['time_interval']))
         timer = Timer(float(config['time_interval']), worker)
         timer.start()
         timer.join()
+        logging.info('[ {} ] Done.'.format(i))

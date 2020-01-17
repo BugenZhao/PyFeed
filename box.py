@@ -1,5 +1,5 @@
-from datetime import datetime
 import logging
+from datetime import datetime
 
 from dateutil.tz import gettz
 from feedgen.entry import FeedEntry
