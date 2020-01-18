@@ -2,6 +2,8 @@ import json
 import logging
 import pickle
 import signal
+import argparse
+import sys
 from threading import Timer
 
 import spider
@@ -13,10 +15,12 @@ box = None
 config: dict = {}
 
 
-def init():
+def init(_config_file: str):
     global config
-    with open('config.json', 'r') as c:
+    with open(_config_file, 'r') as c:
         config = json.load(c)
+
+    logging.info('{} ({}) LOADED!'.format(config['title'], config_file))
 
     global box
     try:
@@ -54,7 +58,12 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, my_exit)
     signal.signal(signal.SIGTERM, my_exit)
 
-    init()
+    parser = argparse.ArgumentParser(description='PyFeed - A simple RSS feed implemented in Python')
+    parser.add_argument('-c', '--config', type=str, help='configuration file', required=True)
+    args = parser.parse_args()
+    config_file = args.config
+
+    init(config_file)
 
     i = 0
     while True:

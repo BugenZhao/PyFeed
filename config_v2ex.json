@@ -1,0 +1,22 @@
+{
+  "version": "v0.3",
+  "time_interval": 90,
+  "box_path": "./box_v2ex.p",
+  "rss_path": "/root/homepage/public/rss_v.xml",
+  "url": "https://www.v2ex.com/?tab=all",
+  "base_url": "https://www.v2ex.com",
+  "title": "V2EX by Bugen",
+  "description": "github.com/BugenZhao/PyFeed",
+  "auto_datetime": true,
+  "max_count": 30,
+  "content": false,
+  "xpath": [
+    {
+      "a": "//*[@id=\"Main\"]/div[2]/div[@class=\"cell item\"]//a[@class=\"topic-link\"]",
+      "title": ".//text()",
+      "title_index": 0,
+      "href": "@href",
+      "href_index": 0
+    }
+  ]
+}
