@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 
 from dateutil.tz import gettz
 from feedgen.entry import FeedEntry
@@ -7,16 +6,16 @@ from feedgen.feed import FeedGenerator
 
 from article import Article
 
-url = 'http://bjwb.seiee.sjtu.edu.cn'
-
 
 class Box:
-    def __init__(self):
+    def __init__(self, config=None):
+        if config is None:
+            config = {}
         self.fg = FeedGenerator()
-        self.fg.title('交大电院本科生教务办 RSS by Bugen')
-        self.fg.description('github.com/BugenZhao/PyFeed')
+        self.fg.title(config['title'] if 'title' in config else 'PyFeed')
+        self.fg.description(config['description'] if 'description' in config else 'github.com/BugenZhao/PyFeed')
         self.fg.author({'name': 'Bugen Zhao', 'email': 'bugenzhao@sjtu.edu.cn'})
-        self.fg.link(href=url)
+        self.fg.link(href=config['url'] if 'url' in config else 'github.com/BugenZhao/PyFeed')
         self.fg.language('zh-CN')
 
         self.dict = {}
@@ -28,7 +27,7 @@ class Box:
         fe.link(href=article.link)
         fe.title(article.title)
         fe.description(article.description)
-        fe.pubDate(datetime.strptime(article.date, "%Y-%m-%d").replace(tzinfo=gettz("Asia/Shanghai")))
+        fe.pubDate(article.date.replace(tzinfo=gettz("Asia/Shanghai")))
 
         self.fg.updated()
 
@@ -38,7 +37,7 @@ class Box:
         fe.link(href=article.link)
         fe.title(article.title)
         fe.description(article.description)
-        fe.pubDate(datetime.strptime(article.date, "%Y-%m-%d").replace(tzinfo=gettz("Asia/Shanghai")))
+        fe.pubDate(article.date.replace(tzinfo=gettz("Asia/Shanghai")))
         self.fg.entry(fe, replace=True)
 
         self.fg.updated()

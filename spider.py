@@ -1,5 +1,7 @@
 import logging
 import re
+import traceback
+from datetime import datetime
 from typing import List
 
 from lxml import etree
@@ -7,11 +9,13 @@ from lxml import etree
 from article import Article
 from get_html_text import get_html_text
 
-url = 'http://bjwb.seiee.sjtu.edu.cn'
 
+def get_date(config: dict, a) -> datetime:
+    url = config['url']
+    ret = datetime.now()
+    if config['auto_datetime']:
+        return ret
 
-def get_date(a) -> str:
-    ret = ''
     try:
         raw = str(etree.HTML(get_html_text(url + a.xpath('@href')[0]))
                   .xpath('//*[@id="layout11"]/div/div[1]/div[2]/text()')[0])
@@ -22,23 +26,22 @@ def get_date(a) -> str:
         return ret
 
 
-def get_articles() -> List[Article]:
+def get_articles(config: dict) -> List[Article]:
+    url = config['url']
     articles = []
     try:
         tree = etree.HTML(get_html_text(url))
 
-        top_a = tree.xpath('//*[@id="layout231"]/div/div[2]/div[2]/h4/a')[0]
-        articles.append(Article(str(top_a.xpath('.//text()')[0]),
-                                url + top_a.xpath('@href')[0],
-                                get_date(top_a)
-                                ))
-
-        others = tree.xpath('//*[@id="layout231"]/div/div[2]/ul//li/a')
-        articles += list(map(lambda a: Article(str(a.xpath('.//text()')[1]),
-                                               url + a.xpath('@href')[0],
-                                               get_date(a)),
-                             others))
+        nodes = tree.xpath(config['xpath']['a'])
+        todo = nodes if config['max_count'] == 0 else nodes[:config['max_count']]
+        articles += list(map(lambda a: Article(str(a.xpath(config['xpath']['title'])[config['xpath']['title_index']]),
+                                               config['base_url'] + a.xpath(config['xpath']['href'])[
+                                                   config['xpath']['href_index']],
+                                               get_date(config, a),
+                                               config['content']),
+                             todo))
     except:
+        traceback.print_exc()
         logging.error('Failed to get articles')
 
     return articles

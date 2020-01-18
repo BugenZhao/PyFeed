@@ -9,7 +9,7 @@ from box import Box
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-box: Box = Box()
+box = None
 config: dict = {}
 
 
@@ -26,7 +26,7 @@ def init():
         if box.version != config['version']:
             logging.warning('Box version is {} while feed version is {}'.format(box.version, config['version']))
     except:
-        box = Box()
+        box = Box(config)
         logging.info('New box built.')
 
     box.rss_file(config['rss_path'])
@@ -45,7 +45,7 @@ def my_exit(signum, frame):
 
 
 def worker():
-    for article in spider.get_articles():
+    for article in spider.get_articles(config):
         box.article(article)
     box.rss_file(config['rss_path'])
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     i = 0
     while True:
         i += 1
-        logging.info('[ {} ] will start in {} seconds'.format(i, config['time_interval']))
+        logging.info('[ {} ] will start in {} seconds'.format(i, config['time_interval'] if i != 1 else 0.0))
         time_interval = float(config['time_interval']) if i != 1 else 0.0
         timer = Timer(time_interval, worker)
         timer.start()
